@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -37,8 +38,8 @@ const Signup = () => {
             console.log("Invalid Registration");
         } else{
             window.alert("Registration Successful");
-            window.alert("Registration Successful");
-            navigate("/login");
+            console.alert("Registration Successful");
+            navigate("../login", { replace: true });
         }
     }
 
