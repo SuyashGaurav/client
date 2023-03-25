@@ -1,7 +1,20 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { NavLink } from 'react-router-dom'
 
 const Signup = () => {
+
+    const [user, setUser] = useState({
+        name: "", email: "", phone: "", password: "", cpassword: ""
+    });
+    let name, value;
+    const handleInputs = (e) => {
+        console.log(e);
+        name = e.target.name;
+        value = e.target.value;
+
+        setUser({...user, [name]: value});
+    }
+
   return (
     <>
     <section className="vh-100" style={{backgroundColor: '#eee'}}>
@@ -20,40 +33,45 @@ const Signup = () => {
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input type="text" id="form3Example1c" className="form-control" />
-                      <label className="form-label" htmlFor="form3Example1c">Name</label>
+                      <input type="text" name="name" id="name" className="form-control" 
+                      autocomplete="off" value={user.name} onChange={handleInputs} />
+                      <label className="form-label" htmlFor="name">Name</label>
                     </div>
                   </div>
 
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input type="email" id="form3Example3c" className="form-control" />
-                      <label className="form-label" htmlFor="form3Example3c">Email</label>
+                      <input type="email" name="email" id="email" className="form-control"
+                      autocomplete="off" value={user.email} onChange={handleInputs}/>
+                      <label className="form-label" htmlFor="email">Email</label>
                     </div>
                   </div>
 
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input type="number" id="form3Example3c" className="form-control" />
-                      <label className="form-label" htmlFor="form3Example3c">Phone No</label>
+                      <input type="number" name="phone" id="phone" className="form-control" 
+                      autocomplete="off" value={user.phone} onChange={handleInputs}/>
+                      <label className="form-label" htmlFor="phone">Phone No</label>
                     </div>
                   </div>
 
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input type="password" id="form3Example4c" className="form-control" />
-                      <label className="form-label" htmlFor="form3Example4c">Password</label>
+                      <input type="password" name="password" id="password" className="form-control"
+                      autocomplete="off" value={user.password} onChange={handleInputs} />
+                      <label className="form-label" htmlFor="password">Password</label>
                     </div>
                   </div>
 
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-key fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
-                      <input type="password" id="form3Example4cd" className="form-control" />
-                      <label className="form-label" htmlFor="form3Example4cd">Confirm password</label>
+                      <input type="password" name="cpassword" id="cpassword" className="form-control"
+                      autocomplete="off" value={user.cpassword} onChange={handleInputs} />
+                      <label className="form-label" htmlFor="cpassword">Confirm password</label>
                     </div>
                   </div>
 
@@ -61,7 +79,7 @@ const Signup = () => {
                     <input type="submit" name="signup" id="signup" className="btn btn-primary btn-lg" value= "Register"/>
                   </div>
                   <div>
-                  <NavLink to = "/login">Already registered?</NavLink>
+                  <NavLink style ={{color: 'blue'}} to = "/login">Already registered?</NavLink>
                   </div>
 
                 </form>
