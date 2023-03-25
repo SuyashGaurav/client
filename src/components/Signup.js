@@ -1,7 +1,8 @@
-import React, {useState} from 'react'
-import { NavLink } from 'react-router-dom'
+import React, {useState} from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Signup = () => {
+    const navigate = useNavigate();
 
     const [user, setUser] = useState({
         name: "", email: "", phone: "", password: "", cpassword: ""
@@ -13,6 +14,32 @@ const Signup = () => {
         value = e.target.value;
 
         setUser({...user, [name]: value});
+    }
+
+    const PostData = async (e) => {
+        e.preventDefault();
+
+        const {name, email, phone, password, cpassword} = user;
+
+        const res = await fetch("/register", {
+            method : "POST",
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            body : JSON.stringify({
+                name, email, phone, password, cpassword
+            })
+        });
+
+        const data = await res.json();
+        if(res.status === 422 || !data){
+            window.alert("Invalid Registration");
+            console.log("Invalid Registration");
+        } else{
+            window.alert("Registration Successful");
+            window.alert("Registration Successful");
+            navigate("/login");
+        }
     }
 
   return (
@@ -28,13 +55,13 @@ const Signup = () => {
 
                 <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
-                <form className="mx-1 mx-md-4">
+                <form method = "POST" className="mx-1 mx-md-4">
 
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
                       <input type="text" name="name" id="name" className="form-control" 
-                      autocomplete="off" value={user.name} onChange={handleInputs} />
+                       value={user.name} onChange={handleInputs} />
                       <label className="form-label" htmlFor="name">Name</label>
                     </div>
                   </div>
@@ -43,7 +70,7 @@ const Signup = () => {
                     <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
                       <input type="email" name="email" id="email" className="form-control"
-                      autocomplete="off" value={user.email} onChange={handleInputs}/>
+                       value={user.email} onChange={handleInputs}/>
                       <label className="form-label" htmlFor="email">Email</label>
                     </div>
                   </div>
@@ -52,7 +79,7 @@ const Signup = () => {
                     <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
                       <input type="number" name="phone" id="phone" className="form-control" 
-                      autocomplete="off" value={user.phone} onChange={handleInputs}/>
+                       value={user.phone} onChange={handleInputs}/>
                       <label className="form-label" htmlFor="phone">Phone No</label>
                     </div>
                   </div>
@@ -61,7 +88,7 @@ const Signup = () => {
                     <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
                       <input type="password" name="password" id="password" className="form-control"
-                      autocomplete="off" value={user.password} onChange={handleInputs} />
+                       value={user.password} onChange={handleInputs} />
                       <label className="form-label" htmlFor="password">Password</label>
                     </div>
                   </div>
@@ -70,13 +97,13 @@ const Signup = () => {
                     <i className="fas fa-key fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
                       <input type="password" name="cpassword" id="cpassword" className="form-control"
-                      autocomplete="off" value={user.cpassword} onChange={handleInputs} />
+                      value={user.cpassword} onChange={handleInputs} />
                       <label className="form-label" htmlFor="cpassword">Confirm password</label>
                     </div>
                   </div>
 
                   <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <input type="submit" name="signup" id="signup" className="btn btn-primary btn-lg" value= "Register"/>
+                    <input type="submit" name="signup" id="signup" className="btn btn-primary btn-lg" value= "Register" onClick={PostData}/>
                   </div>
                   <div>
                   <NavLink style ={{color: 'blue'}} to = "/login">Already registered?</NavLink>
