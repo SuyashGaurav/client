@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from "axios";
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -22,7 +22,7 @@ const Signup = () => {
 
         const {name, email, phone, password, cpassword} = user;
 
-        const res = await fetch("/register", {
+        const res = await axios.post("/register", {
             method : "POST",
             headers : {
                 "Content-Type" : "application/json"
@@ -56,7 +56,8 @@ const Signup = () => {
 
                 <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
-                <form method = "POST" className="mx-1 mx-md-4">
+                {/* <form method = "POST" className="mx-1 mx-md-4"> */}
+                <form onSubmit={PostData} className="mx-1 mx-md-4">
 
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-user fa-lg me-3 fa-fw"></i>
@@ -104,7 +105,8 @@ const Signup = () => {
                   </div>
 
                   <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <input type="submit" name="signup" id="signup" className="btn btn-primary btn-lg" value= "Register" onClick={PostData}/>
+                    {/* <input type="submit" name="signup" id="signup" className="btn btn-primary btn-lg" value= "Register" onClick={PostData}/> */}
+                    <button type="submit" name="signup" id="signup" className="btn btn-primary btn-lg">Register</button>
                   </div>
                   <div>
                   <NavLink style ={{color: 'blue'}} to = "/login">Already registered?</NavLink>
