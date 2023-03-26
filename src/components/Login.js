@@ -1,6 +1,53 @@
-import React from 'react'
+import React, {useState} from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
+
 
 const Login = () => {
+
+  const navigate = useNavigate();
+
+    const [user, setUser] = useState({
+       email: "", password: ""
+    });
+    let name, value;
+    const handleInputs = (e) => {
+        console.log(e);
+        name = e.target.name;
+        value = e.target.value;
+
+        setUser({...user, [name]: value});
+    }
+
+  const handleSubmit = async (e) => {
+    // prevent the form from refreshing the whole page
+    e.preventDefault();
+    const {email, password} = user;
+
+        const res = await fetch("http://localhost:5000/login", {
+            method : "POST",
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            body : JSON.stringify({
+                email, password
+            })
+        });
+
+        const data = await res.json();
+        if(res.status === 400 || res.status  === 404 || !data){
+            window.alert("Invalid Credentials");
+            console.log("Invalid Credentials");
+        } else{
+            window.alert(`Welcome  ${email}`);
+            console.log("Registration Successful");
+            navigate("../", { replace: true });
+        }
+  }
+
+
+
   return (
     <>
     <section className="vh-100">
@@ -14,17 +61,20 @@ const Login = () => {
         <form>
 
           <div className="form-outline mb-4">
-            <input type="email" id="form3Example3" className="form-control form-control-lg"
+            <input type="email" name = "email" id="email"
+             value={user.email} onChange={handleInputs} className="form-control form-control-lg"
               placeholder="Enter a valid email address" />
           </div>
 
           <div className="form-outline mb-3">
-            <input type="password" id="form3Example4" className="form-control form-control-lg"
+            <input type="password" name="password" id="password" 
+            value={user.password} onChange={handleInputs} className="form-control form-control-lg"
               placeholder="Enter password" />
           </div>
 
           <div className="text-center text-lg-start mt-4 pt-2">
             <button type="button" className="btn btn-primary btn-lg"
+            onClick={(e) => handleSubmit(e)}
                style ={{paddingLeft: '2.5rem', paddingRight: '2.5rem'}}>Login</button>
           </div>
         </form>

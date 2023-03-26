@@ -9,9 +9,9 @@ const Navbar = () => {
   <div className="container-fluid">
   <button className="btn btn-default btn-lg"><i className="zmdi zmdi-settings zmdi-hc-spin"></i></button>
     <NavLink className="navbar-brand" to="/">ULX</NavLink>
-    {/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
-    </button> */}
+    </button>
     <div className="collapse navbar-collapse" id="navbarNav">
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">

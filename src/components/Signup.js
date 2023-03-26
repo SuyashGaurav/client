@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import axios from "axios";
+// import axios from "axios";
 
 const Signup = () => {
     const navigate = useNavigate();
 
     const [user, setUser] = useState({
-        name: "", email: "", phone: "", password: "", cpassword: ""
+        name: "", email: "", phone: "", password: ""
     });
     let name, value;
     const handleInputs = (e) => {
@@ -20,25 +20,25 @@ const Signup = () => {
     const PostData = async (e) => {
         e.preventDefault();
 
-        const {name, email, phone, password, cpassword} = user;
+        const {name, email, phone, password} = user;
 
-        const res = await axios.post("/register", {
+        const res = await fetch("http://localhost:5000/register", {
             method : "POST",
             headers : {
                 "Content-Type" : "application/json"
             },
             body : JSON.stringify({
-                name, email, phone, password, cpassword
+                name, email, phone, password
             })
         });
 
         const data = await res.json();
-        if(res.status === 422 || !data){
+        if(res.status === 500 || !data){
             window.alert("Invalid Registration");
             console.log("Invalid Registration");
         } else{
             window.alert("Registration Successful");
-            console.alert("Registration Successful");
+            console.log("Registration Successful");
             navigate("../login", { replace: true });
         }
     }
@@ -56,8 +56,8 @@ const Signup = () => {
 
                 <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
-                {/* <form method = "POST" className="mx-1 mx-md-4"> */}
-                <form onSubmit={PostData} className="mx-1 mx-md-4">
+                <form method = "POST" className="mx-1 mx-md-4">
+                {/* <form onSubmit={PostData} className="mx-1 mx-md-4"> */}
 
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-user fa-lg me-3 fa-fw"></i>
@@ -95,18 +95,9 @@ const Signup = () => {
                     </div>
                   </div>
 
-                  <div className="d-flex flex-row align-items-center mb-4">
-                    <i className="fas fa-key fa-lg me-3 fa-fw"></i>
-                    <div className="form-outline flex-fill mb-0">
-                      <input type="password" name="cpassword" id="cpassword" className="form-control"
-                      value={user.cpassword} onChange={handleInputs} />
-                      <label className="form-label" htmlFor="cpassword">Confirm password</label>
-                    </div>
-                  </div>
-
                   <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    {/* <input type="submit" name="signup" id="signup" className="btn btn-primary btn-lg" value= "Register" onClick={PostData}/> */}
-                    <button type="submit" name="signup" id="signup" className="btn btn-primary btn-lg">Register</button>
+                    <input type="submit" name="signup" id="signup" className="btn btn-primary btn-lg" value= "Register" onClick={PostData}/>
+                    {/* <button type="submit" name="signup" id="signup" className="btn btn-primary btn-lg">Register</button> */}
                   </div>
                   <div>
                   <NavLink style ={{color: 'blue'}} to = "/login">Already registered?</NavLink>
